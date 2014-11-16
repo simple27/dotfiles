@@ -72,7 +72,20 @@
                        helm-c-source-recentf
                        helm-c-source-locate)
                      "*helm-my-buffers*")))
-(global-set-key (kbd "M-h") 'helm-M-x)
+
+(define-key evil-normal-state-map "Za" 'helm-apropos)
+(define-key evil-normal-state-map "Zb" 'helm-mini)
+(define-key evil-normal-state-map "Zf" 'helm-find-files)
+(define-key evil-normal-state-map "Zg" 'helm-google-suggest)
+(define-key evil-normal-state-map "Zh" 'helm-M-x)
+(define-key evil-normal-state-map "Zk" 'helm-show-kill-ring)
+(define-key evil-normal-state-map "Zm" 'helm-all-mark-rings)
+(define-key evil-normal-state-map "Zo" 'helm-occur)
+(define-key evil-normal-state-map "Zp" 'helm-list-emacs-processes)
+(define-key evil-normal-state-map "Zr" 'helm-register)
+(define-key evil-normal-state-map "Zs" 'helm-semantic-or-imenu)
+(define-key evil-normal-state-map "Zt" 'helm-top)
+(define-key evil-normal-state-map "Zw" 'helm-surfraw)
 
 ;; aesthetics
 (custom-set-variables
@@ -91,7 +104,7 @@ scroll-step 1)
 (display-time-mode t)
 
 ;; fix indentation
-(package 'dtrt-indent)
+(require 'dtrt-indent)
 (dtrt-indent-mode 1)
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
