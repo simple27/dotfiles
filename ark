@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# archiving utility
+tar --to-stdout -c $1 | gzip -f | openssl enc -aes-256-cbc -salt > ~/out.bin
