@@ -11,11 +11,17 @@
 (require 'package)
 (package-initialize)
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("melpa-stable" . "http://melpa.org/packages/")
+                         ("melpa-stable" . "http://stable.melpa.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
-			 ("org" . "http://orgmode.org/elpa")))
+                         ("org" . "http://orgmode.org/elpa")))
+
 (add-to-list 'load-path "~/.emacs.d/ess-13.09-1/lisp")
 (add-to-list 'load-path "~/.emacs.d/elpa/evil-1.0.8")
+(add-to-list 'load-path "~/.emacs.d/emacs-mode")
+(add-to-list 'load-path "~/.emacs.d/dante")
+(add-to-list 'load-path "~/.emacs.d/f")
+(add-to-list 'load-path "~/.emacs.d/s")
+(add-to-list 'load-path "~/.emacs.d/lcr")
 
 (defun require-package (package)
   (setq-default highlight-tabs t)
@@ -58,6 +64,7 @@
 (setq helm-quick-update t)
 (setq helm-bookmark-show-location t)
 (setq helm-buffers-fuzzy-matching t)
+(setq helm-swoop-pre-input-function (lambda () ""))
 
 (defun helm-my-buffers ()
   (interactive)
@@ -71,26 +78,37 @@
                      "*helm-my-buffers*")))
 
 (define-key evil-normal-state-map "Za" 'helm-apropos)
-(define-key evil-normal-state-map "Zb" 'helm-mini)
-(define-key evil-normal-state-map "Zf" 'helm-find-files)
+(define-key evil-normal-state-map "\\" 'helm-mini)
+(define-key evil-normal-state-map "|" 'helm-find-files)
 (define-key evil-normal-state-map "Zg" 'helm-google-suggest)
 (define-key evil-normal-state-map "Zh" 'helm-M-x)
 (define-key evil-normal-state-map "Zi" 'helm-semantic-or-imenu)
-(define-key evil-normal-state-map "Zk" 'helm-show-kill-ring)
+(define-key evil-normal-state-map "?" 'helm-show-kill-ring)
 (define-key evil-normal-state-map "Zm" 'helm-all-mark-rings)
 (define-key evil-normal-state-map "Zo" 'helm-occur)
 (define-key evil-normal-state-map "Zp" 'helm-list-emacs-process)
 (define-key evil-normal-state-map "Zr" 'helm-register)
-(define-key evil-normal-state-map "Zs" 'helm-swoop)
+(define-key evil-normal-state-map "/" 'helm-swoop)
 (define-key evil-normal-state-map "Zt" 'helm-top)
-(define-key evil-normal-state-map "Zw" 'helm-surfraw)
 
 ;; aesthetics
 (custom-set-variables
- '(ansi-color-names-vector ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2"
-                            "#333366" "#ccaa8f" "#f6f3e8"])
- '(custom-enabled-themes (quote (whiteboard))))
-(custom-set-faces)
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector
+   ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
+ '(custom-enabled-themes (quote (whiteboard)))
+ '(package-selected-packages
+   (quote
+    (haskell-mode magit powerline-evil helm-swoop helm-projectile helm-google ess dtrt-indent))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
 
 ;; smooth scrolling
 (setq scroll-margin 5 scroll-conservatively 9999 scroll-step 1)
@@ -115,6 +133,9 @@
 (define-key evil-normal-state-map "QW" 'delete-window)
 (define-key evil-normal-state-map "QO" 'next-multiframe-window)
 (define-key evil-normal-state-map "!!" 'linum-mode)
+
+;; magit bindings
+(define-key evil-normal-state-map " " 'magit-status)
 
 ;; esc quits
 (defun minibuffer-keyboard-quit ()
@@ -144,5 +165,27 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (global-whitespace-mode t)
 
 ;; easy visible stuff last, so errors are noticeable
-(scroll-bar-mode -1)
+;; (scroll-bar-mode -1)
 (tool-bar-mode -1)
+(menu-bar-mode -1)
+(linum-mode)
+
+(require 'dante)
+(require 'f)
+(require 'flycheck)
+(require 'lcr)
+(require 's)
+(require 'haskell-mode)
+
+;;  :ensure t
+;;  :after haskell-mode
+;;  :commands 'dante-mode
+;;  :init
+(add-hook 'haskell-mode-hook 'dante-mode)
+(add-hook 'haskell-mode-hook 'flycheck-mode)
+(setq dante-repl-command-line '("bake" "ghci"))
+
+
+;; haskell and agda modes
+(require 'agda-input)
+(add-hook 'haskell-mode-hook (lambda () (set-input-method 'Agda)))
