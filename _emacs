@@ -84,10 +84,9 @@
   (global-whitespace-mode t)
   )
 
+;; haskell and agda modes
 (use-package flycheck)
 (use-package haskell-mode)
-
-;; haskell and agda modes
 (use-package agda-input
   :load-path "~/.emacs.d/emacs-mode"
   :config
