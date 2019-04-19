@@ -9,9 +9,6 @@
                          ("marmalade" . "http://marmalade-repo.org/packages/")
                          ("org" . "http://orgmode.org/elpa")))
 
-(use-package ess-site
-  :load-path "~/.emacs.d/ess-13.09-1/lisp")
-
 ;; helm setup
 (use-package helm-misc)
 (use-package helm-projectile)
@@ -60,8 +57,10 @@
   (define-key evil-normal-state-map "QO" 'next-multiframe-window)
   (define-key evil-normal-state-map "!!" 'linum-mode)
   (define-key evil-normal-state-map " " 'magit-status)
-
   )
+
+(use-package ess-site
+  :load-path "~/.emacs.d/ess-13.09-1/lisp")
 
 ;; powerline
 (use-package powerline
