@@ -1,4 +1,0 @@
-#!/bin/sh
-
-# archiving utility
-cat ~/out.bin | openssl enc -d -aes-256-cbc -salt | gzip -d
