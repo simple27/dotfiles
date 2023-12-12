@@ -1,13 +1,11 @@
-;; id
+; id
 (setq user-full-name "Jonathan Sparling")
 
 ;; repos/package handling
 (require 'package)
 (package-initialize)
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("melpa-stable" . "https://melpa.org/packages/")
-                         ("marmalade" . "http://marmalade-repo.org/packages/")
-                         ("org" . "http://orgmode.org/elpa")))
+                         ("melpa-stable" . "https://melpa.org/packages/")))
 
 ;; Bootstrap 'use-package'
 (eval-after-load 'gnutls
@@ -21,16 +19,7 @@
 (setq use-package-always-ensure t)
 
 ;; helm setup
-(use-package helm-misc)
 (use-package helm-projectile)
-(use-package helm-locate)
-(use-package helm-config
-  :config
-  (setq helm-quick-update t)
-  (setq helm-bookmark-show-location t)
-  (setq helm-buffers-fuzzy-matching t)
-  (setq helm-swoop-pre-input-function (lambda () ""))
-  )
 
 ;; evil and ess
 (use-package evil
@@ -68,18 +57,11 @@
   (define-key evil-normal-state-map "QW" 'delete-window)
   (define-key evil-normal-state-map "QO" 'next-multiframe-window)
   (define-key evil-normal-state-map "!!" 'linum-mode)
-  (define-key evil-normal-state-map " " 'magit-status)
+  (define-key evil-normal-state-map "ZM" 'magit-status)
   )
 
 (use-package ess-site
   :load-path "~/.emacs.d/ess-13.09-1/lisp")
-
-;; powerline
-(use-package powerline
-  :config
-  (powerline-evil-vim-color-theme)
-  (display-time-mode t)
-  )
 
 ;; fix indentation
 (use-package dtrt-indent
@@ -99,11 +81,6 @@
 ;; haskell and agda modes
 (use-package flycheck)
 (use-package haskell-mode)
-(use-package agda-input
-  :load-path "~/.emacs.d/emacs-mode"
-  :config
-  (add-hook 'haskell-mode-hook (lambda () (set-input-method 'Agda)))
-  )
 
 ;; smooth scrolling
 (setq scroll-margin 5 scroll-conservatively 9999 scroll-step 1)
@@ -127,10 +104,11 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (use-package))))
+ '(package-selected-packages '(magit helm-swoop ess evil use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
